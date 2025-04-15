@@ -1,0 +1,296 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Roboto Light", "Helvetica Neue", sans-serif;
+}
+.navbar {
+  background-color: darkslategrey;
+  color: white;
+  padding-block: 1rem;
+
+  a {
+    color: white;
+    text-decoration: none;
+  }
+}
+.container,
+.nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.container {
+  padding-inline: 1rem;
+  margin-inline: auto;
+  max-width: 700px;
+}
+.nav-links {
+  list-style: none;
+  gap: 2rem;
+}
+.nav-link {
+  list-style: none;
+}
+
+.nav-link.active {
+  color: orange;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 2rem;
+  color: darkslategrey;
+  margin-bottom: 1.5rem;
+}
+
+.footer {
+  background-color: darkslategrey;
+  color: white;
+  padding-block: 1rem;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.footer .container {
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-links a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.product-list-container {
+  margin: 2rem auto;
+  max-width: 700px;
+  padding: 1rem;
+  text-align: center; /* Centrera hela listans innehåll */
+}
+
+.page-title {
+  text-align: center;
+  font-size: 2rem;
+  color: darkslategrey;
+  margin-bottom: 1.5rem;
+}
+
+.products-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Centrera produkterna */
+  gap: 2rem;
+  list-style-type: none; /* Ta bort standard liststil */
+  padding: 0;
+  margin: 0;
+}
+
+.product-item {
+  display: flex;
+  flex-direction: column; /* Gör varje produkt till en vertikal layout */
+  justify-content: center;
+  align-items: center;
+  background-color: #f4f4f4;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 250px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center; /* Centrerar innehållet i varje produkt */
+}
+
+.product-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.product-item h2 {
+  font-size: 1.2rem;
+  color: darkslategrey;
+}
+
+.product-item p {
+  font-size: 1rem;
+  color: #333;
+}
+
+.product-item .price {
+  font-weight: bold;
+  color: #555;
+}
+
+.product-item button {
+  background-color: darkslategrey;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.product-item button:hover {
+  background-color: #333;
+}
+.cart-container {
+  margin: 2rem auto;
+  max-width: 700px;
+  padding: 1rem;
+}
+
+.cart-title {
+  text-align: center;
+  font-size: 2rem;
+  color: darkslategrey;
+  margin-bottom: 1.5rem;
+}
+
+.cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f4f4f4;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cart-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.cart-item h2 {
+  font-size: 1.2rem;
+  color: darkslategrey;
+  margin: 0;
+}
+
+.cart-item p {
+  font-size: 1rem;
+  color: #333;
+  margin: 0;
+}
+
+.cart-item .remove-button {
+  background-color: crimson;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cart-item .remove-button:hover {
+  background-color: darkred;
+}
+
+.cart-summary {
+  margin-top: 2rem;
+  text-align: right;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: darkslategrey;
+}
+
+.center-text {
+  text-align: center;
+  font-size: 1.2rem;
+  color: darkslategrey;
+  margin-top: 2rem;
+}
+
+.register-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 400px;
+  margin: 2rem auto;
+}
+
+.register-container input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.register-container button {
+  background-color: darkslategrey;
+  color: white;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.register-container button:hover {
+  background-color: #333;
+}
+
+.user-menu-wrapper {
+  position: relative;
+  display: inline-block;
+  z-index: 1000;
+}
+
+.user-menu {
+  cursor: pointer;
+}
+
+.user-icon {
+  color: white; /* eller annan färg */
+}
+
+.dropdown {
+  position: absolute;
+  top: 2.5rem;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+}
+
+.dropdown a {
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: #333;
+}
+
+.dropdown a:hover {
+  background-color: #f0f0f0;
+}
