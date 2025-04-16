@@ -38,6 +38,7 @@ const ProductList = () => {
                     <div key={product.id} className="product-item">
                         <h2>{product.name}</h2>
                         <p>{product.description}</p>
+                        <img src={product.imageUrl} alt={product.name} className="product-image" />
                         <p className="price">{product.price} SEK</p>
                         <button onClick={() => {
                             console.log("Adding to cart, productId:", product.id);
