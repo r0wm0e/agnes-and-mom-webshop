@@ -27,37 +27,37 @@ const HomePage = () => {
     }, []);
 
     return (
-        <div className="homepage-container">
-            <header className="homepage-header">
-                <h1>Välkommen till Agnes and Mom Webshop!</h1>
-                <p>
+        <div className="max-w-7xl mx-auto px-4 py-8">
+            <header className="text-center mb-8">
+                <h1 className="text-4xl font-bold text-gray-800 mb-4">Välkommen till Agnes and Mom Webshop!</h1>
+                <p className="text-lg text-gray-600">
                     Där kreativiteten flödar och varje poster berättar en egen historia. Inspirerad av en mammas passion för pyssel, konst och det unika, erbjuder vi en kuraterad kollektion av posters som förvandlar ditt hem till ett levande galleri.
                 </p>
             </header>
 
-            <section className="product-preview">
-                <h2>Utforska våra favoriter</h2>
+            <section>
+                <h2 className="text-2xl font-semibold text-gray-800 text-center mb-8">Utforska våra favoriter</h2>
                 {loading ? (
-                    <p>Laddar produkter...</p>
+                    <p className="text-center">Laddar produkter...</p>
                 ) : error ? (
-                    <p>Fel vid hämtning av produkter: {error.message}</p>
+                    <p className="text-center text-red-500">Fel vid hämtning av produkter: {error.message}</p>
                 ) : products.length > 0 ? (
-                    <div className="product-grid">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                         {products.map((product) => (
-                            <div key={product.id} className="product-card">
+                            <div key={product.id} className="bg-white shadow-md rounded-lg p-4">
                                 <img
                                     src={product.imageUrl || 'https://via.placeholder.com/300x200'}
                                     alt={product.name}
-                                    className="product-image"
+                                    className="w-full h-48 object-cover rounded-md mb-4"
                                 />
-                                <h3>{product.name}</h3>
+                                <h3 className="text-xl font-semibold text-gray-800 text-center">{product.name}</h3>
                             </div>
                         ))}
                     </div>
                 ) : (
-                    <p>Inga produkter tillgängliga.</p>
+                    <p className="text-center">Inga produkter tillgängliga.</p>
                 )}
-                <Link to="/products" className="view-all">
+                <Link to="/products" className="inline-block mt-6 text-blue-500 hover:underline text-center">
                     Se hela kollektionen
                 </Link>
             </section>

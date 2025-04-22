@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { Cart } from "../interfaces/Cart";  // Importera Cart
+import { Cart } from "../interfaces/Cart";
 
 interface CartContextType {
     cart: Cart;
@@ -50,6 +50,16 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
         fetchCart();
     }, []);
+
+    useEffect(() => {
+        const totalAmount = cart.products.reduce(
+            (total, product) => total + product.price, 0
+        );
+        setCart((prevCart) => ({
+            ...prevCart,
+            totalAmount,
+        }));
+    }, [cart.products]);
 
     const addToCart = async (cartId: number, productId: number) => {
         console.log("Adding product to cart with cartId:", cartId, "and productId:", productId);

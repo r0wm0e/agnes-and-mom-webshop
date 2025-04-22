@@ -31,22 +31,31 @@ const ProductList = () => {
     if (error) return <p>Error: {error.message}</p>;
 
     return (
-        <div className="product-list-container">
-            <h1 className="page-title">Product List</h1>
-            <ul className="products-list">
+        <div className="max-w-7xl mx-auto px-4 py-8">
+            <h1 className="text-3xl font-semibold text-center mb-8">Product List</h1>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                 {products.map((product) => (
-                    <div key={product.id} className="product-item">
-                        <h2>{product.name}</h2>
-                        <p>{product.description}</p>
-                        <img src={product.imageUrl} alt={product.name} className="product-image" />
-                        <p className="price">{product.price} SEK</p>
-                        <button onClick={() => {
-                            console.log("Adding to cart, productId:", product.id);
-                            addToCart(1, product.id);
-                        }}>
-                            Add to Cart
+                    <li key={product.id} className="bg-white shadow-md rounded-lg p-4">
+                        <img src={product.imageUrl}
+                            alt={product.name}
+                            className="w-full h-48 object-cover rounded-md mb-4"/>
+
+                        <h2 className="text-xl font-semibold text-gray-800">{product.name}</h2>
+                        <p className="text-gray-600 mb-2">{product.description}</p>
+                        <p className="text-lg font-bold text-gray-900">{product.price} SEK</p>
+                        <p className="text-sm text-gray-500">I lager: {product.stock}</p>
+                        <button
+                            disabled={product.stock <= 0}
+                            onClick={() => addToCart(1, product.id)}
+                            className={`mt-4 py-2 px-4 rounded-md transition-colors ${
+                                product.stock <= 0
+                                    ? "bg-gray-400 text-white cursor-not-allowed"
+                                    : "bg-blue-500 text-white hover:bg-blue-600"
+                            }`}
+                        >
+                            {product.stock <= 0 ? "Slut i lager" : "Lägg i varukorg"}
                         </button>
-                    </div>
+                    </li>
                 ))}
             </ul>
         </div>
