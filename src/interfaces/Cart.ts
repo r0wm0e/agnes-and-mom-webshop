@@ -1,7 +1,7 @@
-import {Product} from "./Product.ts";
+import { CartItem } from "./CartItem";
 
 export interface Cart {
     id: number;
-    products: Product[];
+    items: CartItem[];
     totalAmount: number;
 }

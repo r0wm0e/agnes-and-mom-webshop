@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useCart } from "../context/CartContext";
 import { Product } from "../interfaces/Product";
+import AddToCartButton from "../components/AddToCartButton.tsx";
 
 const ProductList = () => {
     const [products, setProducts] = useState<Product[]>([]);
@@ -41,20 +42,12 @@ const ProductList = () => {
                             className="w-full h-48 object-cover rounded-md mb-4"/>
 
                         <h2 className="text-xl font-semibold text-gray-800">{product.name}</h2>
-                        <p className="text-gray-600 mb-2">{product.description}</p>
-                        <p className="text-lg font-bold text-gray-900">{product.price} SEK</p>
-                        <p className="text-sm text-gray-500">I lager: {product.stock}</p>
-                        <button
-                            disabled={product.stock <= 0}
-                            onClick={() => addToCart(1, product.id)}
-                            className={`mt-4 py-2 px-4 rounded-md transition-colors ${
-                                product.stock <= 0
-                                    ? "bg-gray-400 text-white cursor-not-allowed"
-                                    : "bg-blue-500 text-white hover:bg-blue-600"
-                            }`}
-                        >
-                            {product.stock <= 0 ? "Slut i lager" : "Lägg i varukorg"}
-                        </button>
+
+                        <div className="space-y-4">
+                            <p className="text-lg text-gray-600">{product.description}</p>
+                            <p className="text-xl font-semibold text-teal-600">{product.price} SEK</p>
+                            <AddToCartButton onClick={() => addToCart(product.id, 1)} stock={product.stock} />
+                        </div>
                     </li>
                 ))}
             </ul>

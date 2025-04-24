@@ -1,12 +1,12 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, {useRef, useState} from "react";
 import { FaShoppingCart, FaTrashAlt } from "react-icons/fa";
 import { useCart } from "../context/CartContext";
 import { NavLink } from "react-router-dom";
+import {CartItem} from "../interfaces/CartItem.ts";
 
 const Dropdown: React.FC = () => {
-    const { cart, removeFromCart } = useCart();
+    const { cart, removeFromCart, updateQuantity } = useCart();
     const [isHovered, setIsHovered] = useState(false);
-    const containerRef = useRef<HTMLDivElement>(null);
     const timeoutRef = useRef<number | null>(null);
 
     const handleMouseEnter = () => {
@@ -20,22 +20,18 @@ const Dropdown: React.FC = () => {
         }, 200);
     };
 
-    useEffect(() => {
-        return () => {
-            if (timeoutRef.current) clearTimeout(timeoutRef.current);
-        };
-    }, []);
+    const isCartEmpty = !cart?.items?.length;
 
     return (
-        <div className="relative" ref={containerRef}
+        <div className="relative"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}>
 
             <button className="relative" aria-label="Open shopping cart">
                 <FaShoppingCart />
-                {cart.products.length > 0 && (
+                {cart?.items?.length > 0 && (
                     <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
-                        {cart.products.length}
+                        {cart.items.reduce((sum: number, item: CartItem): number => sum + item.quantity, 0)}
                     </div>
                 )}
             </button>
@@ -43,38 +39,49 @@ const Dropdown: React.FC = () => {
             {isHovered && (
                 <div className="absolute right-0 mt-2 w-64 bg-white text-black rounded-lg shadow-lg z-50">
                     <div className="p-4">
-                        {cart.products.length === 0 ? (
+                        {isCartEmpty ? (
                             <p>Varukorgen är tom.</p>
                         ) : (
                             <ul className="space-y-2">
-                                {cart.products.map((item) => (
-                                    <li
-                                        key={item.id}
-                                        className="border-b pb-2 flex items-center justify-between gap-2"
-                                    >
+                                {cart.items.map((item) => (
+                                    <li key={item.id} className="border-b pb-2 flex items-center justify-between gap-2">
                                         <div className="flex items-center gap-2">
-                                            <img
-                                                src={item.imageUrl}
-                                                alt={item.name}
-                                                className="w-10 h-10 object-cover rounded"
-                                            />
+                                            <img src={item.product.imageUrl}
+                                                alt={item.product.name} className="w-10 h-10 object-cover rounded"/>
+
                                             <div className="text-sm">
-                                                <div className="font-medium">{item.name}</div>
-                                                <div className="text-gray-600">{item.price} SEK</div>
+                                                <div className="font-medium">{item.product.name}</div>
+                                                <div className="text-gray-600">
+                                                    {item.product.price} SEK x {item.quantity}
+                                                </div>
                                             </div>
                                         </div>
-                                        <button
-                                            onClick={() => removeFromCart(cart.id, item.id)} className="text-red-500 hover:text-red-700" aria-label={`${item.name}`}>
-                                            <FaTrashAlt />
-                                        </button>
+                                        <div className="flex items-center gap-1">
+                                            <button onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+                                                className="px-2 text-sm bg-gray-200 rounded hover:bg-gray-300"
+                                                aria-label="Minska antal">
+                                                −
+                                            </button>
+                                            <span className="min-w-[1.5rem] text-center">{item.quantity}</span>
+                                            <button onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                                                    className="px-2 text-sm bg-gray-200 rounded hover:bg-gray-300"
+                                                    aria-label="Öka antal">
+                                                +
+                                            </button>
+                                            <button onClick={() => removeFromCart(item.product.id)}
+                                                    className="text-red-500 hover:text-red-700 ml-2"
+                                                    aria-label="Ta bort produkt">
+                                                <FaTrashAlt />
+                                            </button>
+                                        </div>
                                     </li>
                                 ))}
                                 <li className="text-sm mt-2 pt-2 border-t">
                                     Total: {cart.totalAmount} SEK
                                 </li>
                                 <li>
-                                    <NavLink
-                                        to="/cart" className={({ isActive }) => `block mt-2 text-center bg-teal-600 text-white py-1 rounded hover:bg-teal-500 transition ${isActive ? "font-semibold underline" : ""}`}>
+                                    <NavLink to="/cart" className={({ isActive }) => `block mt-2 text-center bg-teal-600 text-white py-1 rounded hover:bg-teal-500 transition 
+                                    ${isActive ? "font-semibold underline" : ""}`}>
                                         Gå till varukorgen
                                     </NavLink>
                                 </li>

@@ -5,11 +5,13 @@ interface CartContextType {
     cart: Cart;
     loading: boolean;
     error: string | null;
-    addToCart: (cartId: number, productId: number) => void;
-    removeFromCart: (cartId: number, productId: number) => void;
+    addToCart: (productId: number, quantity: number) => void;
+    removeFromCart: (productId: number) => void;
+    updateQuantity: (productId: number, quantity: number) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
+const savedCartId = localStorage.getItem("cartId");
 
 export const useCart = (): CartContextType => {
     const context = useContext(CartContext);
@@ -26,7 +28,7 @@ interface CartProviderProps {
 export const CartProvider = ({ children }: CartProviderProps) => {
     const [cart, setCart] = useState<Cart>({
         id: 0,
-        products: [],
+        items: [],
         totalAmount: 0,
     });
     const [loading, setLoading] = useState<boolean>(true);
@@ -34,11 +36,18 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
     useEffect(() => {
         const fetchCart = async () => {
+            if (!savedCartId) {
+                const res = await fetch("http://localhost:8080/api/cart/create", { method: "POST" });
+                const newCart: Cart = await res.json();
+                setCart(newCart);
+                localStorage.setItem("cartId", newCart.id.toString());
+                setLoading(false);
+                return;
+            }
+
             try {
-                const response = await fetch("http://localhost:8080/api/carts/1");
-                if (!response.ok) {
-                    throw new Error("Could not fetch cart from server");
-                }
+                const response = await fetch(`http://localhost:8080/api/cart/${savedCartId}`);
+                if (!response.ok) throw new Error("Could not fetch cart from server");
                 const data: Cart = await response.json();
                 setCart(data);
             } catch (err: any) {
@@ -51,27 +60,18 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         fetchCart();
     }, []);
 
-    useEffect(() => {
-        const totalAmount = cart.products.reduce(
-            (total, product) => total + product.price, 0
-        );
-        setCart((prevCart) => ({
-            ...prevCart,
-            totalAmount,
-        }));
-    }, [cart.products]);
-
-    const addToCart = async (cartId: number, productId: number) => {
-        console.log("Adding product to cart with cartId:", cartId, "and productId:", productId);
+    const addToCart = async (productId: number, quantity: number) => {
+        const cartId = cart.id;
+        console.log("Adding product to cart with cartId:", cartId, "and productId:", productId, "and quantity:", quantity);
 
         if (!cartId || !productId) {
-            console.error("Cart ID or Product ID is missing");
+            console.error("CheckoutPage ID or Product ID is missing");
             return;
         }
 
         try {
-            const response = await fetch(`http://localhost:8080/api/carts/${cartId}/add-product/${productId}`, {
-                method: "POST",
+            const response = await fetch(`http://localhost:8080/api/cart/${cartId}/add?productId=${productId}&quantity=${quantity}`, {
+                method: "POST"
             });
 
             if (!response.ok) {
@@ -86,9 +86,10 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         }
     };
 
-    const removeFromCart = async (cartId: number, productId: number) => {
+    const removeFromCart = async (productId: number) => {
+        const cartId = cart.id;
         try {
-            const response = await fetch(`http://localhost:8080/api/carts/${cartId}/remove-product/${productId}`, {
+            const response = await fetch(`http://localhost:8080/api/cart/${cartId}/remove?productId=${productId}`, {
                 method: "DELETE",
             });
             if (!response.ok) {
@@ -102,12 +103,44 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         }
     };
 
+    const updateQuantity = async (productId: number, newQuantity: number) => {
+        if (newQuantity < 0) {
+            console.error("Quantity must be greater than 0");
+            return;
+        }
+
+        if (!savedCartId) {
+            console.error("CheckoutPage not found in localStorage");
+            return;
+        }
+
+        try {
+            const response = await fetch(
+                `http://localhost:8080/api/cart/${savedCartId}/update?productId=${productId}&quantity=${newQuantity}`,
+                {
+                    method: "PUT",
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to update quantity in cart");
+            }
+
+            const updatedCart: Cart = await response.json();
+            setCart(updatedCart);
+        } catch (error: any) {
+            console.error("Error updating quantity:", error);
+            setError(error.message);
+        }
+    };
+
     const value: CartContextType = {
         cart,
         loading,
         error,
         addToCart,
         removeFromCart,
+        updateQuantity
     };
 
     return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

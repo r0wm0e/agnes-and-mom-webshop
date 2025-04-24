@@ -44,14 +44,17 @@ const HomePage = () => {
                 ) : products.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                         {products.map((product) => (
-                            <div key={product.id} className="bg-white shadow-md rounded-lg p-4">
+                            <Link to={`/products/${product.id}`} key={product.id} className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition duration-300">
                                 <img
                                     src={product.imageUrl || 'https://via.placeholder.com/300x200'}
                                     alt={product.name}
                                     className="w-full h-48 object-cover rounded-md mb-4"
                                 />
                                 <h3 className="text-xl font-semibold text-gray-800 text-center">{product.name}</h3>
-                            </div>
+                                <button className="mt-2 block mx-auto bg-teal-600 text-white px-4 py-1 rounded hover:bg-teal-500 transition">
+                                    Visa mer
+                                </button>
+                            </Link>
                         ))}
                     </div>
                 ) : (

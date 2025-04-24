@@ -6,7 +6,7 @@ import './index.css';
 
 import HomePage from './pages/HomePage';
 import ProductList from './pages/ProductList';
-import Cart from './pages/Cart';
+import CheckoutPage from './pages/CheckoutPage.tsx';
 import { CartProvider } from './context/CartContext';
 import RootLayout from "./layouts/RootLayout.tsx";
 import ProductDetailsPage from "./pages/ProductDetailsPage.tsx";
@@ -22,8 +22,8 @@ root.render(
                     <Route path="/" element={<RootLayout />}>
                         <Route index element={<HomePage />} />
                         <Route path="products" element={<ProductList />} />
-                        <Route path="products/id" element={<ProductDetailsPage />} />
-                        <Route path="cart" element={<Cart />} />
+                        <Route path="/products/:productId" element={<ProductDetailsPage />} />
+                        <Route path="cart" element={<CheckoutPage />} />
                         <Route path="*" element={<h1>404 - Page Not Found</h1>} />
                     </Route>
                 </Routes>
