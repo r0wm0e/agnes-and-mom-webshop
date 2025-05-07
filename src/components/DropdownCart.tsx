@@ -1,11 +1,11 @@
 import React, {useRef, useState} from "react";
-import { FaShoppingCart, FaTrashAlt } from "react-icons/fa";
-import { useCart } from "../context/CartContext";
-import { NavLink } from "react-router-dom";
+import {FaShoppingCart, FaTrashAlt} from "react-icons/fa";
+import {useCart} from "../context/CartContext";
+import {NavLink} from "react-router-dom";
 import {CartItem} from "../interfaces/CartItem.ts";
 
-const Dropdown: React.FC = () => {
-    const { cart, removeFromCart, updateQuantity } = useCart();
+const DropdownCart: React.FC = () => {
+    const {cart, removeFromCart, updateQuantity} = useCart();
     const [isHovered, setIsHovered] = useState(false);
     const timeoutRef = useRef<number | null>(null);
 
@@ -24,11 +24,11 @@ const Dropdown: React.FC = () => {
 
     return (
         <div className="relative"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}>
+             onMouseEnter={handleMouseEnter}
+             onMouseLeave={handleMouseLeave}>
 
             <button className="relative" aria-label="Open shopping cart">
-                <FaShoppingCart />
+                <FaShoppingCart/>
                 {cart?.items?.length > 0 && (
                     <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1">
                         {cart.items.reduce((sum: number, item: CartItem): number => sum + item.quantity, 0)}
@@ -47,7 +47,7 @@ const Dropdown: React.FC = () => {
                                     <li key={item.id} className="border-b pb-2 flex items-center justify-between gap-2">
                                         <div className="flex items-center gap-2">
                                             <img src={item.product.imageUrl}
-                                                alt={item.product.name} className="w-10 h-10 object-cover rounded"/>
+                                                 alt={item.product.name} className="w-10 h-10 object-cover rounded"/>
 
                                             <div className="text-sm">
                                                 <div className="font-medium">{item.product.name}</div>
@@ -58,8 +58,8 @@ const Dropdown: React.FC = () => {
                                         </div>
                                         <div className="flex items-center gap-1">
                                             <button onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
-                                                className="px-2 text-sm bg-gray-200 rounded hover:bg-gray-300"
-                                                aria-label="Minska antal">
+                                                    className="px-2 text-sm bg-gray-200 rounded hover:bg-gray-300"
+                                                    aria-label="Minska antal">
                                                 −
                                             </button>
                                             <span className="min-w-[1.5rem] text-center">{item.quantity}</span>
@@ -71,7 +71,7 @@ const Dropdown: React.FC = () => {
                                             <button onClick={() => removeFromCart(item.product.id)}
                                                     className="text-red-500 hover:text-red-700 ml-2"
                                                     aria-label="Ta bort produkt">
-                                                <FaTrashAlt />
+                                                <FaTrashAlt/>
                                             </button>
                                         </div>
                                     </li>
@@ -80,7 +80,7 @@ const Dropdown: React.FC = () => {
                                     Total: {cart.totalAmount} SEK
                                 </li>
                                 <li>
-                                    <NavLink to="/cart" className={({ isActive }) => `block mt-2 text-center bg-teal-600 text-white py-1 rounded hover:bg-teal-500 transition 
+                                    <NavLink to="/cart" className={({isActive}) => `block mt-2 text-center bg-teal-600 text-white py-1 rounded hover:bg-teal-500 transition 
                                     ${isActive ? "font-semibold underline" : ""}`}>
                                         Gå till varukorgen
                                     </NavLink>
@@ -94,4 +94,4 @@ const Dropdown: React.FC = () => {
     );
 };
 
-export default Dropdown;
+export default DropdownCart;

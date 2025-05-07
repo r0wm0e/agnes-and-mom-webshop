@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { Product } from '../interfaces/Product.ts';
+import {Link} from 'react-router-dom';
+import {useEffect, useState} from 'react';
+import {Product} from '../interfaces/Product.ts';
 
 const HomePage = () => {
     const [products, setProducts] = useState<Product[]>([]);
@@ -31,7 +31,9 @@ const HomePage = () => {
             <header className="text-center mb-8">
                 <h1 className="text-4xl font-bold text-gray-800 mb-4">Välkommen till Agnes and Mom Webshop!</h1>
                 <p className="text-lg text-gray-600">
-                    Där kreativiteten flödar och varje poster berättar en egen historia. Inspirerad av en mammas passion för pyssel, konst och det unika, erbjuder vi en kuraterad kollektion av posters som förvandlar ditt hem till ett levande galleri.
+                    Där kreativiteten flödar och varje poster berättar en egen historia. Inspirerad av en mammas passion
+                    för pyssel, konst och det unika, erbjuder vi en kuraterad kollektion av posters som förvandlar ditt
+                    hem till ett levande galleri.
                 </p>
             </header>
 
@@ -44,14 +46,16 @@ const HomePage = () => {
                 ) : products.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                         {products.map((product) => (
-                            <Link to={`/products/${product.id}`} key={product.id} className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition duration-300">
+                            <Link to={`/products`} key={product.id}
+                                  className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition duration-300">
                                 <img
                                     src={product.imageUrl || 'https://via.placeholder.com/300x200'}
                                     alt={product.name}
                                     className="w-full h-48 object-cover rounded-md mb-4"
                                 />
                                 <h3 className="text-xl font-semibold text-gray-800 text-center">{product.name}</h3>
-                                <button className="mt-2 block mx-auto bg-teal-600 text-white px-4 py-1 rounded hover:bg-teal-500 transition">
+                                <button
+                                    className="mt-2 block mx-auto bg-teal-600 text-white px-4 py-1 rounded hover:bg-teal-500 transition">
                                     Visa mer
                                 </button>
                             </Link>

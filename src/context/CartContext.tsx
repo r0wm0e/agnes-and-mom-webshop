@@ -1,5 +1,5 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { Cart } from "../interfaces/Cart";
+import {createContext, useContext, useState, useEffect, ReactNode} from "react";
+import {Cart} from "../interfaces/Cart";
 
 interface CartContextType {
     cart: Cart;
@@ -25,7 +25,7 @@ interface CartProviderProps {
     children: ReactNode;
 }
 
-export const CartProvider = ({ children }: CartProviderProps) => {
+export const CartProvider = ({children}: CartProviderProps) => {
     const [cart, setCart] = useState<Cart>({
         id: 0,
         items: [],
@@ -37,7 +37,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     useEffect(() => {
         const fetchCart = async () => {
             if (!savedCartId) {
-                const res = await fetch("http://localhost:8080/api/cart/create", { method: "POST" });
+                const res = await fetch("http://localhost:8080/api/cart/create", {method: "POST"});
                 const newCart: Cart = await res.json();
                 setCart(newCart);
                 localStorage.setItem("cartId", newCart.id.toString());

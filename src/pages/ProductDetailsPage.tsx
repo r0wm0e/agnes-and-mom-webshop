@@ -6,11 +6,11 @@ import AddToCartButton from "../components/AddToCartButton.tsx";
 
 const ProductDetailsPage: React.FC = () => {
 
-    const { productId } = useParams<{ productId: string }>();
+    const {productId} = useParams<{ productId: string }>();
     const [product, setProduct] = useState<Product | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
-    const { addToCart } = useCart();
+    const {addToCart} = useCart();
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -50,10 +50,10 @@ const ProductDetailsPage: React.FC = () => {
                     <p className="text-lg text-gray-600">{product.description}</p>
                     <p className="text-xl font-semibold text-teal-600">{product.price} SEK</p>
                     <AddToCartButton onClick={() => {
-                            console.log('Knapp klickad');
-                            addToCart(product.id, 1);
-                        }}
-                        stock={product.stock}
+                        console.log('Knapp klickad');
+                        addToCart(product.id, 1);
+                    }}
+                                     stock={product.stock}
                     />
                 </div>
             </div>
