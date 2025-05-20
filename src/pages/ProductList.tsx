@@ -34,12 +34,11 @@ const ProductList = () => {
 
     return (
         <div className="max-w-7xl mx-auto px-4 py-8">
-            <h1 className="text-3xl font-semibold text-center mb-8">Product List</h1>
+            <h1 className="text-3xl font-semibold text-center mb-8">Posters</h1>
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                 {products.map((product) => (
                     <li key={product.id} className="bg-white shadow-md rounded-lg p-4">
-                        <Link to={`/products/${product.id}`} key={product.id}
-                              className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition duration-300">
+                        <Link to={`/products/${product.id}`} key={product.id}>
                             <img src={product.imageUrl}
                                  alt={product.name}
                                  className="w-full h-48 object-cover rounded-md mb-4"/>
@@ -48,7 +47,7 @@ const ProductList = () => {
                         </Link>
 
                         <div className="space-y-4">
-                            <p className="text-lg text-gray-600">{product.description}</p>
+                            <p className="text-lg text-gray-600 line-clamp-3">{product.description}</p>
                             <p className="text-xl font-semibold text-teal-600">{product.price} SEK</p>
                             <AddToCartButton onClick={() => addToCart(product.id, 1)} stock={product.stock}/>
                         </div>

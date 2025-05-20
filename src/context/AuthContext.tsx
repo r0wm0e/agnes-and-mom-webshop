@@ -1,5 +1,5 @@
 import React, {createContext, useState, useContext, ReactNode} from 'react';
-import Auth from '../utils/Auth';
+import {isLoggedIn} from '../utils/Auth';
 
 interface AuthContextType {
     isLoggedIn: boolean;
@@ -14,19 +14,19 @@ interface Props {
 }
 
 export const AuthProvider: React.FC<Props> = ({children}) => {
-    const [loggedIn, setLoggedIn] = useState<boolean>(Auth.isLoggedIn());
+    const [isLoggedInState, setIsLoggedInState] = useState<boolean>(isLoggedIn);
 
     const login = () => {
-        setLoggedIn(true);
+        setIsLoggedInState(true);
     };
 
     const logout = () => {
         localStorage.removeItem("token");
-        setLoggedIn(false);
+        setIsLoggedInState(false);
     };
 
     return (
-        <AuthContext.Provider value={{isLoggedIn: loggedIn, login, logout}}>
+        <AuthContext.Provider value={{isLoggedIn: isLoggedInState, login, logout}}>
             {children}
         </AuthContext.Provider>
     );

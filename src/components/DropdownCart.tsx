@@ -5,7 +5,7 @@ import {NavLink} from "react-router-dom";
 import {CartItem} from "../interfaces/CartItem.ts";
 
 const DropdownCart: React.FC = () => {
-    const {cart, removeFromCart, updateQuantity} = useCart();
+    const {cart, removeFromCart, updateQuantity, error} = useCart();
     const [isHovered, setIsHovered] = useState(false);
     const timeoutRef = useRef<number | null>(null);
 
@@ -45,13 +45,17 @@ const DropdownCart: React.FC = () => {
                             <ul className="space-y-2">
                                 {cart.items.map((item) => (
                                     <li key={item.id} className="border-b pb-2 flex items-center justify-between gap-2">
-                                        <div className="flex items-center gap-2">
-                                            <img src={item.product.imageUrl}
-                                                 alt={item.product.name} className="w-10 h-10 object-cover rounded"/>
-
-                                            <div className="text-sm">
-                                                <div className="font-medium">{item.product.name}</div>
-                                                <div className="text-gray-600">
+                                        <div className="flex items-center gap-2 flex-1 min-w-0">
+                                            <img
+                                                src={item.product.imageUrl}
+                                                alt={item.product.name}
+                                                className="w-10 h-10 object-cover rounded"
+                                            />
+                                            <div className="text-sm flex-1 min-w-0">
+                                                <div className="font-medium truncate">
+                                                    {item.product.name}
+                                                </div>
+                                                <div className="text-gray-600 truncate">
                                                     {item.product.price} SEK x {item.quantity}
                                                 </div>
                                             </div>
@@ -76,7 +80,10 @@ const DropdownCart: React.FC = () => {
                                         </div>
                                     </li>
                                 ))}
-                                <li className="text-sm mt-2 pt-2 border-t">
+                                {error && (
+                                    <li className="text-sm text-red-600">{error}</li>
+                                )}
+                                <li className="text-sm mt-2 pt-2">
                                     Total: {cart.totalAmount} SEK
                                 </li>
                                 <li>

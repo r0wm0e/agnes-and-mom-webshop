@@ -1,5 +1,5 @@
 import React, {useRef, useState} from "react";
-import {FaRegUserCircle} from "react-icons/fa";
+import {FaChevronUp, FaRegUserCircle, FaSignInAlt, FaSignOutAlt, FaUserPlus} from "react-icons/fa";
 import {NavLink} from "react-router-dom";
 import {useAuth} from "../context/AuthContext.tsx";
 
@@ -20,41 +20,45 @@ const UserDropdown: React.FC = () => {
     };
 
     return (
-        <div
-            className="relative"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}>
-            <button className="relative" aria-label="User options">
+        <div className="relative" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+            <button className="relative text-white hover:text-teal-300 transition" aria-label="User options">
                 <FaRegUserCircle className="text-2xl"/>
             </button>
 
             {isHovered && (
-                <div className="absolute right-0 mt-2 w-48 bg-white text-black rounded-lg shadow-lg z-50">
-                    <div className="p-4">
+                <div className="absolute right-0 mt-2 w-56 bg-white text-gray-800 rounded-2xl shadow-xl border z-50">
+                    <div className="flex justify-end -mt-2 mr-4">
+                        <FaChevronUp className="text-white bg-white rounded-full p-1 shadow"/>
+                    </div>
+
+                    <div className="px-5 py-4">
                         {!isLoggedIn ? (
-                            <ul className="space-y-2">
+                            <ul className="space-y-3">
                                 <li>
-                                    <NavLink
-                                        to="/login"
-                                        className="block text-center text-teal-600 hover:text-teal-500 py-1 rounded transition">
-                                        Logga in
+                                    <NavLink to="/login"
+                                             className="flex items-center justify-center gap-2 bg-teal-600 text-white py-2 rounded-xl hover:bg-teal-500 transition">
+                                        <FaSignInAlt/> Logga in
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink
-                                        to="/register"
-                                        className="block text-center text-teal-600 hover:text-teal-500 py-1 rounded transition">
-                                        Registrera
+                                    <NavLink to="/register"
+                                             className="flex items-center justify-center gap-2 bg-gray-100 text-teal-600 py-2 rounded-xl hover:bg-gray-200 transition">
+                                        <FaUserPlus/> Registrera
                                     </NavLink>
                                 </li>
                             </ul>
                         ) : (
-                            <ul className="space-y-2">
+                            <ul className="space-y-3">
                                 <li>
-                                    <button
-                                        onClick={logout}
-                                        className="block w-full text-center text-red-600 hover:text-red-500 py-1 rounded transition">
-                                        Logga ut
+                                    <NavLink to="/profile"
+                                             className="flex items-center justify-center gap-2 bg-gray-100 text-gray-700 py-2 rounded-xl hover:bg-gray-200 transition">
+                                        <FaRegUserCircle/>Min profil
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <button onClick={logout}
+                                            className="flex items-center justify-center gap-2 w-full bg-red-100 text-red-600 py-2 rounded-xl hover:bg-red-200 transition">
+                                        <FaSignOutAlt/>Logga ut
                                     </button>
                                 </li>
                             </ul>

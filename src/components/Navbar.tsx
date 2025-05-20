@@ -14,20 +14,14 @@ const Navbar: React.FC = () => {
 
                 <ul className="flex items-center space-x-6">
                     <li>
-                        <NavLink
-                            to="/"
-                            className={({isActive}) =>
-                                `hover:text-teal-400 transition ${isActive ? "font-semibold underline" : ""}`
-                            }>
+                        <NavLink to="/" className={({isActive}) =>
+                            `hover:text-teal-400 transition ${isActive ? "font-semibold underline" : ""}`}>
                             Home
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink
-                            to="/products"
-                            className={({isActive}) =>
-                                `hover:text-teal-400 transition ${isActive ? "font-semibold underline" : ""}`
-                            }>
+                        <NavLink to="/products" className={({isActive}) =>
+                            `hover:text-teal-400 transition ${isActive ? "font-semibold underline" : ""}`}>
                             Products
                         </NavLink>
                     </li>

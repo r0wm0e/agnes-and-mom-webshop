@@ -15,9 +15,3 @@ export const isLoggedIn = (): boolean => {
         return false;
     }
 };
-
-const Auth = {
-    isLoggedIn,
-};
-
-export default Auth;

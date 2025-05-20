@@ -15,15 +15,16 @@ import LoginPage from "./pages/LoginPage.tsx";
 import {AuthProvider} from "./context/AuthContext.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
 import SuccessPage from "./pages/SuccessPage.tsx";
+import CancelPage from "./pages/CancelPage.tsx";
 
 const rootElement = document.getElementById('root') as HTMLElement;
 const root = createRoot(rootElement);
 
 root.render(
     <StrictMode>
-        <CartProvider>
-            <BrowserRouter>
-                <AuthProvider>
+        <AuthProvider>
+            <CartProvider>
+                <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<RootLayout/>}>
                             <Route index element={<HomePage/>}/>
@@ -34,11 +35,12 @@ root.render(
                             <Route path="login" element={<LoginPage/>}/>
                             <Route path="profile" element={<ProfilePage/>}/>
                             <Route path="success" element={<SuccessPage/>}/>
+                            <Route path="canceled" element={<CancelPage/>}/>
                             <Route path="*" element={<h1>404 - Page Not Found</h1>}/>
                         </Route>
                     </Routes>
-                </AuthProvider>
-            </BrowserRouter>
-        </CartProvider>
+                </BrowserRouter>
+            </CartProvider>
+        </AuthProvider>
     </StrictMode>
 );

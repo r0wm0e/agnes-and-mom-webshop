@@ -2,6 +2,7 @@ import React from 'react';
 import {useCart} from '../context/CartContext';
 import {fetchWithAuth} from "../utils/fetWithAuth.ts";
 import {isLoggedIn} from "../utils/Auth.ts";
+import {NavLink} from "react-router-dom";
 
 const CheckoutPage: React.FC = () => {
     const {cart, loading, error, removeFromCart} = useCart();
@@ -45,8 +46,8 @@ const CheckoutPage: React.FC = () => {
                                      className="w-20 h-20 object-cover rounded"/>
                                 <div className="flex-1">
                                     <h2 className="text-lg font-semibold">{item.product.name}</h2>
-                                    <p className="text-gray-600">Pris: {item.product.price} SEK</p>
-                                    <p className="text-gray-600">Antal: {item.quantity}</p>
+                                    <p>Pris: {item.product.price} SEK</p>
+                                    <p>Antal: {item.quantity}</p>
                                 </div>
                                 <button className="text-red-600 hover:text-red-800 font-medium"
                                         onClick={() => removeFromCart(item.product.id)}>
@@ -61,16 +62,24 @@ const CheckoutPage: React.FC = () => {
                     </div>
 
                     {loggedIn ? (
-                        <button
-                            onClick={handleCheckout}
-                            className="mt-6 w-full bg-teal-600 hover:bg-teal-500 text-white font-semibold py-2 rounded transition"
-                        >
+                        <button onClick={handleCheckout}
+                                className="mt-6 w-full bg-teal-600 hover:bg-teal-500 text-white font-semibold py-2 rounded transition">
                             Gå till kassan
                         </button>
                     ) : (
-                        <p className="mt-6 text-red-600 font-medium text-center">
-                            Du måste logga in för att kunna beställa.
-                        </p>
+                        <div className="mt-6 space-y-3 text-center">
+                            <p className="text-red-600 font-medium">Du måste vara inloggad för att köpa.</p>
+                            <div className="flex justify-center gap-3">
+                                <NavLink to="/login"
+                                    className="px-4 py-2 bg-teal-600 hover:bg-teal-500 text-white rounded font-semibold transition">
+                                    Logga in
+                                </NavLink>
+                                <NavLink to="/register"
+                                    className="px-4 py-2 border border-teal-600 hover:bg-teal-50 text-teal-600 rounded font-semibold transition">
+                                    Registrera
+                                </NavLink>
+                            </div>
+                        </div>
                     )}
                 </>
             )}

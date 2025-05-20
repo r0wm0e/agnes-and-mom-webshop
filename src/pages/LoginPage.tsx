@@ -6,7 +6,7 @@ import {useAuth} from "../context/AuthContext";
 const LoginPage: React.FC = () => {
     const [serverError, setServerError] = useState("");
     const navigate = useNavigate();
-    const {login} = useAuth();                    // 👈 Ta ut login()
+    const {login} = useAuth();
 
     const onSubmit = async (data: AuthFormFields) => {
         setServerError("");
@@ -35,9 +35,8 @@ const LoginPage: React.FC = () => {
 
     return (
         <>
-            <h1>Logga in här</h1>
-            <AuthForm
-                onSubmit={onSubmit}
+            <h1 className="text-center">Logga in här</h1>
+            <AuthForm onSubmit={onSubmit}
                 serverError={serverError}
                 buttonText="Logga in"
             />

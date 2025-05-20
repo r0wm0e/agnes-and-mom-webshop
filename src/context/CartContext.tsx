@@ -110,7 +110,7 @@ export const CartProvider = ({children}: CartProviderProps) => {
         }
 
         if (!savedCartId) {
-            console.error("CheckoutPage not found in localStorage");
+            console.error("Cart not found in localStorage");
             return;
         }
 
@@ -123,11 +123,13 @@ export const CartProvider = ({children}: CartProviderProps) => {
             );
 
             if (!response.ok) {
-                throw new Error("Failed to update quantity in cart");
+                const errorData = await response.json();
+                throw new Error(errorData.message || "Kunde inte uppdatera kvantitet");
             }
 
             const updatedCart: Cart = await response.json();
             setCart(updatedCart);
+            setError(null);
         } catch (error: any) {
             console.error("Error updating quantity:", error);
             setError(error.message);

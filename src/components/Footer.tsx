@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
             <div className="container mx-auto px-4">
                 <div className="flex justify-between items-center">
                     <div className="footer-links">
-
+                        {/*TODO Om oss,*/}
                     </div>
                     <p className="flex items-center gap-1">
                         <FaRegCopyright/>

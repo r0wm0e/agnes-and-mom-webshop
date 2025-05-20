@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import AuthForm, { AuthFormFields } from "../components/AuthForm";
+import {useState} from "react";
+import {useNavigate} from "react-router-dom";
+import AuthForm, {AuthFormFields} from "../components/AuthForm";
 
 const RegisterPage = () => {
     const [serverError, setServerError] = useState("");
@@ -12,7 +12,7 @@ const RegisterPage = () => {
         try {
             const response = await fetch("http://localhost:8080/api/auth/register", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(data),
             });
 
@@ -30,9 +30,11 @@ const RegisterPage = () => {
     };
 
     return (
-        <><h1>Registrera dig här</h1>
+        <>
+            <h1 className="text-center">Registrera dig här</h1>
             <AuthForm onSubmit={onSubmit} serverError={serverError}
-                                               buttonText="Registrera dig"/></>
+                      buttonText="Registrera dig"/>
+        </>
     );
 };
 
